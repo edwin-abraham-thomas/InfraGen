@@ -8,7 +8,7 @@ namespace InfraGen.Models
 {
     public class User
     {
-        public string Name { get; set; } = "Edwin Abraham Thomas";
-        public string AdoPat { get; set; } = "ABcdEFghijKlMno";
+        public string Name { get; set; }
+        public string AdoPat { get; set; }
     }
 }
