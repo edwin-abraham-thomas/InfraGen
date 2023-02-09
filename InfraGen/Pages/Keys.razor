@@ -1,21 +1,22 @@
 ﻿@page "/keys"
-@using InfraGen.Models;
+@using InfraGen.Data;
+@inject UserContext UserContext;
 
 <h3>Keys</h3>
 
-<EditForm Model="@_userConfig">
+<EditForm Model="@UserContext">
     <div class="flex-column justify-content-center">
         <div class="mb-3 row">
             <label for="nameInput" class="col-sm-3 col-form-label">Name </label>
             <div class="col-sm-9">
-                <InputText type="text" @bind-Value="_userConfig.Name" class="form-control" id="nameInput"></InputText>
+                <InputText type="text" @bind-Value="UserContext.User.Name" class="form-control" id="nameInput"></InputText>
             </div>
         </div>
 
         <div class="mb-3 row">
             <label for="adoPatInput" class="col-sm-3 col-form-label">Azure DevOps PAT </label>
             <div class="col-sm-9">
-                <InputText type="text" @bind-Value="_userConfig.AdoPat" class="form-control" id="adoPatInput"></InputText>
+                <InputText type="text" @bind-Value="UserContext.User.AdoPat" class="form-control" id="adoPatInput"></InputText>
             </div>
         </div>
 
@@ -31,5 +32,4 @@
 
 
 @code {
-    private User _userConfig = new();
 }   
