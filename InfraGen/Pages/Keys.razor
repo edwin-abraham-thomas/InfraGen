@@ -1,7 +1,35 @@
 ﻿@page "/keys"
+@using InfraGen.Models;
 
 <h3>Keys</h3>
 
-@code {
+<EditForm Model="@_userConfig">
+    <div class="flex-column justify-content-center">
+        <div class="mb-3 row">
+            <label for="nameInput" class="col-sm-3 col-form-label">Name </label>
+            <div class="col-sm-9">
+                <InputText type="text" @bind-Value="_userConfig.Name" class="form-control" id="nameInput"></InputText>
+            </div>
+        </div>
 
-}
+        <div class="mb-3 row">
+            <label for="adoPatInput" class="col-sm-3 col-form-label">Azure DevOps PAT </label>
+            <div class="col-sm-9">
+                <InputText type="text" @bind-Value="_userConfig.AdoPat" class="form-control" id="adoPatInput"></InputText>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">
+                Save
+            </button>
+        </div>
+    </div>
+    
+</EditForm>
+
+
+
+@code {
+    private User _userConfig = new();
+}   
