@@ -2,6 +2,7 @@
 using InfraGen.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using InfraGen.Mappers;
 
 namespace InfraGen;
 
@@ -21,7 +22,8 @@ public static class MauiProgram
 
 		builder.Services.AddMauiBlazorWebView();
 
-		builder.Services.AddSingleton<UserContext>(new UserContext());
+		builder.Services.AddAutoMapper(opt => opt.AddProfile(new MapperProfile()));
+		builder.Services.AddSingleton<UserContext>();
 
 
 #if DEBUG
