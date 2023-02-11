@@ -31,7 +31,6 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<UserContext>();
         builder.Services.AddSingleton<ResourceConfigService>();
-        builder.Services.AddScoped<ToastService>();
 
         return builder.Build();
 	}
