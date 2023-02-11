@@ -66,18 +66,46 @@ namespace InfraGen.Data
 
         public async Task UpdateUserInfo()
         {
-            string userString = "";
-            using (StreamReader file = File.OpenText(_settingFilePath))
+            var user = await GetObjectFromJsonFileAsync<User>(_settingFilePath);
+            user.Info = _mapper.Map<Info>(User.Info);
+            var updateSuccess = WriteObjectToJsonFileAsync(user, _settingFilePath);
+        }
+
+        public async Task UpdateUserCredentials()
+        {
+            var user = await GetObjectFromJsonFileAsync<User>(_settingFilePath);
+            user.Credentials = _mapper.Map<Credentials>(User.Credentials);
+            var updateSuccess = WriteObjectToJsonFileAsync(user, _settingFilePath);
+        }
+
+        private async Task<T> GetObjectFromJsonFileAsync<T>(string path)
+        {
+            string TString = "";
+            using (StreamReader file = File.OpenText(path))
             using (JsonTextReader reader = new JsonTextReader(file))
             {
-                userString = JToken.ReadFrom(reader).ToString();
+                var jToken = await JToken.ReadFromAsync(reader);
+                TString = jToken.ToString();
             }
 
-            var user = JsonConvert.DeserializeObject<User>(userString);
+            T dataObject = JsonConvert.DeserializeObject<T>(TString);
 
-            user.Info = _mapper.Map<Info>(User.Info);
+            return dataObject;
+        }
 
-            await Task.Delay(5000);
+        private async Task<bool> WriteObjectToJsonFileAsync<T>(T dataObjectUpdate, string path)
+        {
+            try
+            {
+                string TObjectUpdateString = JsonConvert.SerializeObject(dataObjectUpdate);
+                await File.WriteAllTextAsync(_settingFilePath, TObjectUpdateString);
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
+            return false;
         }
     }
 }

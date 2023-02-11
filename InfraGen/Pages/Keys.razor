@@ -39,8 +39,13 @@
     private async void Save()
     {
         Saving = true;
+        StateHasChanged();
+
         await UserContext.UpdateUserInfo();
+        await UserContext.UpdateUserCredentials();
+
         Saving = false;
+        StateHasChanged();
     }
 
 }   
