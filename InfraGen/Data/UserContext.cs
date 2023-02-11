@@ -68,14 +68,14 @@ namespace InfraGen.Data
         {
             var user = await GetObjectFromJsonFileAsync<User>(_settingFilePath);
             user.Info = _mapper.Map<Info>(User.Info);
-            var updateSuccess = WriteObjectToJsonFileAsync(user, _settingFilePath);
+            var updateSuccess = await WriteObjectToJsonFileAsync(user, _settingFilePath);
         }
 
         public async Task UpdateUserCredentials()
         {
             var user = await GetObjectFromJsonFileAsync<User>(_settingFilePath);
             user.Credentials = _mapper.Map<Credentials>(User.Credentials);
-            var updateSuccess = WriteObjectToJsonFileAsync(user, _settingFilePath);
+            var updateSuccess = await WriteObjectToJsonFileAsync(user, _settingFilePath);
         }
 
         private async Task<T> GetObjectFromJsonFileAsync<T>(string path)

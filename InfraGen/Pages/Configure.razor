@@ -1,5 +1,50 @@
-﻿<h3>Configure</h3>
+﻿@using InfraGen.Data;
+@using InfraGen.Models;
+@inject ResourceConfigService _resourceConfigService;
+
+<h3>Configure Resources</h3>
+
+<EditForm Model="@_resourceConfigService" OnValidSubmit="@SaveResourceConfig">
+    <div class="flex-column justify-content-center">
+        <div class="mb-3 row">
+            <label for="projectNameInput" class="col-sm-3 col-form-label">Project Name </label>
+            <div class="col-sm-9">
+                <InputText type="text" @bind-Value="_resourceConfigService.ResourceConfig.ProjectName" class="form-control" id="projectNameInput"></InputText>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="gitServerInput" class="col-sm-3 col-form-label">Git Server </label>
+            <div class="col-sm-9">
+                <InputSelect @bind-Value="_resourceConfigService.ResourceConfig.GitServer" class="btn dropdown-toggle">
+                    <option value="@GitServer.AzureDevOps">AzureDevOps</option>
+                    <option value="@GitServer.GitHub">GitHub</option>
+                </InputSelect>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary" disabled="@Saving">
+                Save
+            </button>
+        </div>
+    </div>
+</EditForm>
+
 
 @code {
 
+    [Parameter]
+    public bool Saving { get; set; } = false;
+
+    private async void SaveResourceConfig()
+    {
+        Saving = true;
+        StateHasChanged();
+
+        await _resourceConfigService.UpdateResourceConfigAsync();
+
+        Saving = false;
+        StateHasChanged();
+    }
 }

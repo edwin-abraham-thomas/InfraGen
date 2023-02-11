@@ -1,22 +1,22 @@
 ﻿@page "/keys"
 @using InfraGen.Data;
-@inject UserContext UserContext;
+@inject UserContext _userContext;
 
 <h3>Keys</h3>
 
-<EditForm Model="@UserContext" OnValidSubmit="@Save">
+<EditForm Model="@_userContext" OnValidSubmit="@Save">
     <div class="flex-column justify-content-center">
         <div class="mb-3 row">
             <label for="nameInput" class="col-sm-3 col-form-label">Name </label>
             <div class="col-sm-9">
-                <InputText type="text" @bind-Value="UserContext.User.Info.Name" class="form-control" id="nameInput"></InputText>
+                <InputText type="text" @bind-Value="_userContext.User.Info.Name" class="form-control" id="nameInput"></InputText>
             </div>
         </div>
 
         <div class="mb-3 row">
             <label for="adoPatInput" class="col-sm-3 col-form-label">Azure DevOps PAT </label>
             <div class="col-sm-9">
-                <InputText type="text" @bind-Value="UserContext.User.Credentials.AdoPAT" class="form-control" id="adoPatInput"></InputText>
+                <InputText type="text" @bind-Value="_userContext.User.Credentials.AdoPAT" class="form-control" id="adoPatInput"></InputText>
             </div>
         </div>
 
@@ -41,8 +41,8 @@
         Saving = true;
         StateHasChanged();
 
-        await UserContext.UpdateUserInfo();
-        await UserContext.UpdateUserCredentials();
+        await _userContext.UpdateUserInfo();
+        await _userContext.UpdateUserCredentials();
 
         Saving = false;
         StateHasChanged();

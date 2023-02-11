@@ -23,17 +23,17 @@ public static class MauiProgram
 		builder.Services.AddMauiBlazorWebView();
 
 		builder.Services.AddAutoMapper(opt => opt.AddProfile(new MapperProfile()));
-		builder.Services.AddSingleton<UserContext>();
-
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
 
-		builder.Services.AddSingleton<WeatherForecastService>();
+        builder.Services.AddSingleton<UserContext>();
+        builder.Services.AddSingleton<ResourceConfigService>();
+        builder.Services.AddScoped<ToastService>();
 
-		return builder.Build();
+        return builder.Build();
 	}
 
 	
