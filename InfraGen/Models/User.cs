@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,13 +15,14 @@ namespace InfraGen.Models
             Credentials = new Credentials();
         }
 
-
+        [Required]
         public Info Info { get; set; }
         public Credentials Credentials { get; set; }
     }
 
     public class Info
     {
+        [Required]
         public string Name { get; set; }
     }
 

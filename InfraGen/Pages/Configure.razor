@@ -1,5 +1,67 @@
-﻿<h3>Configure</h3>
+﻿@using InfraGen.Data;
+@using InfraGen.Models;
+@inject ResourceConfigService _resourceConfigService;
+
+<h3>Configure Resources</h3>
+
+<EditForm Model="@_resourceConfigService.ResourceConfig" OnValidSubmit="@SaveResourceConfig">
+    <DataAnnotationsValidator />
+    <div class="flex-column justify-content-center">
+        <div class="mb-3 row form-field-wraper">
+            <label class="col-sm-3 col-form-label">Project Name </label>
+            <div class="col-sm-9">
+                <InputText type="text" @bind-Value="_resourceConfigService.ResourceConfig.ProjectName" class="form-control"></InputText>
+            </div>
+        </div>
+
+        <div class="mb-3 row form-field-wraper">
+            <label class="col-sm-3 col-form-label">Git Server </label>
+            <div class="col-sm-9">
+                <InputSelect @bind-Value="_resourceConfigService.ResourceConfig.GitServer" class="btn dropdown-toggle">
+                    <option value="@GitServer.AzureDevOps">Azure DevOps</option>
+                    <option value="@GitServer.GitHub">GitHub</option>
+                </InputSelect>
+            </div>
+        </div>
+
+        <div class="mb-3 row form-field-wraper">
+            <label class="col-sm-3 col-form-label">Use Template? </label>
+            <div class="col-sm-9">
+                <InputCheckbox type="text" @bind-Value="_resourceConfigService.ResourceConfig.UseTemplate"></InputCheckbox>
+            </div>
+        </div>
+
+        <div class="mb-3 row form-field-wraper">
+            <label class="col-sm-3 col-form-label">Local Project Path </label>
+            <div class="col-sm-9">
+                <InputText type="text" @bind-Value="_resourceConfigService.ResourceConfig.LocalProjectPath" class="form-control"></InputText>
+            </div>
+        </div>
+
+        <ValidationSummary />
+
+        <div>
+            <button type="submit" class="btn btn-primary" disabled="@Saving">
+                Save
+            </button>
+        </div>
+    </div>
+</EditForm>
+
 
 @code {
 
+    [Parameter]
+    public bool Saving { get; set; } = false;
+
+    private async void SaveResourceConfig()
+    {
+        Saving = true;
+        StateHasChanged();
+
+        await _resourceConfigService.UpdateResourceConfigAsync();
+
+        Saving = false;
+        StateHasChanged();
+    }
 }
