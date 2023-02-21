@@ -11,8 +11,14 @@ namespace InfraGen.Models
     {
         [Required]
         public string ProjectName { get; set; }
+
+        [Required]
         public GitServer GitServer { get; set; }
+
+        [Required]
         public bool UseTemplate { get; set; }
+
+        [Required]
         public string LocalProjectPath { get; set; }
     }
 }

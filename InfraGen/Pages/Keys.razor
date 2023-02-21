@@ -4,7 +4,8 @@
 
 <h3>Keys</h3>
 
-<EditForm Model="@_userContext" OnValidSubmit="@Save">
+<EditForm Model="@_userContext.User" OnValidSubmit="@Save">
+    <DataAnnotationsValidator />
     <div class="flex-column justify-content-center">
         <div class="mb-3 row">
             <label for="nameInput" class="col-sm-3 col-form-label">Name </label>
@@ -20,6 +21,7 @@
             </div>
         </div>
 
+        <ValidationSummary />
         <div>
             <button type="submit" class="btn btn-primary" disabled="@Saving">
                 Save
